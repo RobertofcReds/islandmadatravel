@@ -404,5 +404,85 @@
     "cta_title": "¿Listo para tu estancia en Nosy Be?",
     "cta_subtitle": "Te guío a medida a través de todos estos lugares paradisíacos. Contáctame para planificar tu viaje inolvidable.",
     "cta_btn": "Planificar mi viaje"
+  },
+  "ui": {
+    "plan": "Planear mi viaje",
+    "discover": "Descubrir más",
+    "previous": "Foto anterior",
+    "next": "Foto siguiente",
+    "pause": "Pausar presentación",
+    "play": "Iniciar presentación",
+    "language": "Idioma",
+    "light": "Activar modo claro",
+    "dark": "Activar modo oscuro",
+    "menu": "Menú de navegación",
+    "close": "Cerrar",
+    "skip": "Ir al contenido",
+    "loading": "Cargando…",
+    "notFound": "Esta página ha tomado otro camino.",
+    "notFoundText": "Descubre nuestros destinos desde la página de inicio.",
+    "formPrivacy": "El formulario envía tu consulta mediante FormSubmit. La reserva se confirmará por separado.",
+    "showMap": "Mostrar el mapa"
+  },
+  "journey": {
+    "eyebrow": "Tu viaje, paso a paso",
+    "title": "Una gran aventura empieza con una conversación.",
+    "subtitle": "Un itinerario diseñado juntos, según tus intereses y tu ritmo.",
+    "step1": {
+      "title": "Comparte tus ideas",
+      "text": "Destinos, fechas y número de viajeros: cuéntame el viaje que imaginas."
+    },
+    "step2": {
+      "title": "Diseñemos el itinerario",
+      "text": "Hablamos de las etapas, actividades, transportes y servicios necesarios."
+    },
+    "step3": {
+      "title": "Viaja con tranquilidad",
+      "text": "Acordamos el programa y las condiciones antes de confirmar tu estancia."
+    }
+  },
+  "faq": {
+    "eyebrow": "Antes de viajar",
+    "title": "Algunas respuestas para empezar.",
+    "subtitle": "¿Tienes un proyecto especial? Hablemos.",
+    "q1": "¿Puedo personalizar el circuito?",
+    "a1": "Sí. Indica tus intereses, ritmo, número de viajeros y presupuesto para preparar una propuesta adecuada.",
+    "q2": "¿Puedo combinar Diégo-Suarez y Nosy Be?",
+    "a2": "Puedes solicitar un viaje con ambos destinos. Las etapas y los traslados se acordarán según el tiempo disponible.",
+    "q3": "¿Cómo solicito un presupuesto?",
+    "a3": "Envía fechas, destinos y número de participantes. La propuesta detallará servicios incluidos, opciones y precio antes de reservar.",
+    "q4": "¿El formulario confirma mi reserva?",
+    "a4": "No. El formulario inicia el contacto. La reserva se confirma tras acordar programa, disponibilidad y condiciones."
+  },
+  "information": {
+    "privacy": {
+      "title": "Privacidad y datos",
+      "heading1": "Tu solicitud de viaje",
+      "text1": "El formulario envía nombre, correo, mensaje e información de viaje opcional a FormSubmit, el servicio utilizado para entregar las solicitudes.",
+      "heading2": "Preferencias en este dispositivo",
+      "text2": "El sitio guarda idioma y tema en el almacenamiento local del navegador. Puedes borrar estas preferencias en los ajustes del navegador.",
+      "heading3": "Servicios externos y contacto",
+      "text3": "El mapa utiliza Google Maps. Las fuentes y algunos iconos se cargan desde servicios externos. Los enlaces de WhatsApp abren un servicio de terceros. Para preguntas sobre los datos de tu solicitud, contáctanos por correo."
+    },
+    "terms": {
+      "title": "Información sobre solicitudes de viaje",
+      "heading1": "Solicitud y confirmación",
+      "text1": "El sitio presenta destinos y servicios. Enviar el formulario o un mensaje de WhatsApp no confirma una reserva.",
+      "heading2": "Programa y servicios",
+      "text2": "Itinerario, fechas, disponibilidad, precio y servicios incluidos se acuerdan directamente con el guía antes de confirmar.",
+      "heading3": "Condiciones de la estancia",
+      "text3": "Consulta las condiciones de pago, modificación y cancelación de tu propuesta antes de confirmar. Las excursiones se adaptan a las condiciones locales."
+    }
+  },
+  "selectors": {
+    "languageHint": "Tu viaje, en tu idioma.",
+    "undecided": "Decidamos juntos",
+    "undecidedHint": "Me gustaría recibir orientación",
+    "diegoHint": "Bahías, naturaleza y grandes paisajes",
+    "nosyHint": "Islas, playas y lagunas turquesas",
+    "bothHint": "Un itinerario entre tierra y mar",
+    "destinationTitle": "Elige tu destino",
+    "destinationHint": "¿Qué horizonte te hace soñar?",
+    "destinationPlaceholder": "¿Adónde te gustaría viajar?"
   }
 }

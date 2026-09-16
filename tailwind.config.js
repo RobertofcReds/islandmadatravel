@@ -8,6 +8,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        gray: { 50: '#f5f5ef', 100: '#eaeee7', 200: '#dce3da', 300: '#c3cfc5', 400: '#9aaaa1', 500: '#586f61', 600: '#506259', 700: '#344a40', 800: '#1c322a', 900: '#10271f', 950: '#091b15' },
+        emerald: { 50: '#eff8f1', 100: '#dcefe1', 200: '#bbdec8', 300: '#90caae', 400: '#65b594', 500: '#258563', 600: '#17694e', 700: '#12533e', 800: '#103f32', 900: '#0e3328', 950: '#082219' },
         primary: {
           DEFAULT: '#10B981', // Émeraude moderne
           light: '#34D399',
@@ -21,7 +23,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        serif: ['Poppins', 'sans-serif'],
+        serif: ['Georgia', 'Times New Roman', 'serif'],
       },
       keyframes: {
         twinkle: {

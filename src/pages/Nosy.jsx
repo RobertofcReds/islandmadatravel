@@ -1,27 +1,20 @@
+import Hero from '../components/Hero'
 import { Link } from 'react-router-dom'
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import PlaceCard from '../components/PlaceCard'
-import PlaceDetailSection from '../components/PlaceDetailSection'
-import nosyParfums from '../images/destination/Nosy Be - Île aux Parfums.jpg'
-import nosyIranja from '../images/destination/Nosy Iranja.jpg'
+import PlacesGrid from '../components/PlacesGrid'
+import nosyParfums from '../images/optimized/destination/Nosy Be - Île aux Parfums.webp'
+import nosyIranja from '../images/optimized/destination/Nosy Iranja.webp'
 import { getNosySections, nosyHeroImages } from '../data/nosyData'
 
 const Nosy = () => {
   const { t, language } = useLanguage()
-  const [heroIndex, setHeroIndex] = useState(0)
   const [selectedPlace, setSelectedPlace] = useState(null)
   const [activeSection, setActiveSection] = useState('islands')
 
   const heroImages = nosyHeroImages
   const nosySections = getNosySections(language)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [heroImages.length])
 
   // Sync selectedPlace with current language if a place is currently open
   useEffect(() => {
@@ -41,59 +34,7 @@ const Nosy = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-950 min-h-screen">
       {/* ── Hero ── */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImages[heroIndex]}
-            alt="Nosy Be"
-            className="w-full h-full object-cover transition-all duration-1000 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/20" />
-        </div>
-
-        <div className="container-custom text-center text-white relative z-10 px-4">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-sm px-4 py-1.5 rounded-full mb-6">
-            <i className="fas fa-map-marker-alt text-emerald-400 text-xs" />
-            <span>{t('nosy_page.location_badge')}</span>
-          </div>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-4 flex items-center justify-center gap-3 drop-shadow-lg">
-            <i className="fas fa-tree text-emerald-400 shrink-0" />
-            <span>{t('nosy.hero.title')}</span>
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-95 max-w-2xl mx-auto drop-shadow-md">
-            {t('nosy.hero.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              to="/contact"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-8 py-3.5 rounded-full transition-all shadow-lg flex items-center gap-2"
-            >
-              <i className="fas fa-calendar-check" />
-              {t('nosy.hero.cta_book')}
-            </Link>
-            <a
-              href="#explore"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium px-8 py-3.5 rounded-full transition-all flex items-center gap-2"
-            >
-              <i className="fas fa-compass" />
-              {t('nosy.hero.cta_explore')}
-            </a>
-          </div>
-        </div>
-
-        {/* Dots */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroIndex(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${
-                index === heroIndex ? 'bg-emerald-400 scale-125' : 'bg-white/50 hover:bg-white/80'
-              }`}
-            />
-          ))}
-        </div>
-      </section>
+      <Hero images={heroImages} title={t('nosy.hero.title')} subtitle={t('nosy.hero.subtitle')} badge={t('navbar.nosy')} anchor="explore"  actions={[{ to: '/contact?destination=nosy', label: t('nosy.hero.cta_book') }, { href: '#explore', label: t('ui.discover') }]} />
 
       {/* ── À propos ── */}
       <div className="py-20" id="explore">
@@ -126,7 +67,7 @@ const Nosy = () => {
                 <p className="text-gray-700 dark:text-gray-300 font-medium">{t('nosy.about.best_time_value')}</p>
               </div>
               <Link
-                to="/contact"
+                to="/contact?destination=nosy"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-3.5 rounded-xl transition-all inline-block shadow-md"
               >
                 {t('nosy.about.cta')}
@@ -143,11 +84,12 @@ const Nosy = () => {
               {t('nosy_page.explore_subtitle')}
             </p>
 
-            <div className="flex flex-wrap gap-2 justify-center mb-10">
+            <div className="destination-filters flex flex-wrap gap-2 justify-center mb-10">
               {nosySections.map(section => (
                 <button
                   key={section.id}
-                  onClick={() => setActiveSection(section.id)}
+                  aria-pressed={activeSection === section.id}
+                  onClick={() => { setActiveSection(section.id); setSelectedPlace(null) }}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
                     activeSection === section.id
                       ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
@@ -175,26 +117,7 @@ const Nosy = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {currentSection.places.map(place => (
-                  <Fragment key={place.id}>
-                    <PlaceCard
-                      place={place}
-                      isSelected={selectedPlace?.id === place.id}
-                      onClick={(p) => setSelectedPlace(prev => prev?.id === p.id ? null : p)}
-                    />
-                    {/* Détails apparaissant directement sous ce lieu */}
-                    {selectedPlace?.id === place.id && (
-                      <div className="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 w-full min-w-0 max-w-full overflow-hidden">
-                        <PlaceDetailSection
-                          place={selectedPlace}
-                          onClose={() => setSelectedPlace(null)}
-                        />
-                      </div>
-                    )}
-                  </Fragment>
-                ))}
-              </div>
+              <PlacesGrid places={currentSection.places} selectedPlace={selectedPlace} onSelect={p => setSelectedPlace(previous => previous?.id === p.id ? null : p)} onClose={() => setSelectedPlace(null)} />
             </div>
           </div>
 
@@ -214,7 +137,7 @@ const Nosy = () => {
                 {t('nosy_page.cta_subtitle')}
               </p>
               <Link
-                to="/contact"
+                to="/contact?destination=nosy"
                 className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-3.5 rounded-xl transition-all inline-flex items-center gap-2 shadow-lg"
               >
                 <i className="fas fa-envelope" />

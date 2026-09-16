@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage'
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -59,7 +60,7 @@ const ImageCarousel = ({ images = [], title, description }) => {
       {/* Zone Image Principale */}
       <div className="relative group">
         <div className="relative h-80 sm:h-96 md:h-[420px] w-full overflow-hidden bg-gray-900">
-          <img
+          <ResponsiveImage
             src={images[currentIndex].url}
             alt={images[currentIndex].caption || `Slide ${currentIndex + 1}`}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -121,7 +122,7 @@ const ImageCarousel = ({ images = [], title, description }) => {
                 : 'opacity-60 hover:opacity-100 hover:scale-95'
             }`}
           >
-            <img
+            <ResponsiveImage
               src={image.url}
               alt={image.caption || `Miniature ${index + 1}`}
               className="w-full h-full object-cover"

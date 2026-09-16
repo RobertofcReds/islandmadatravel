@@ -361,8 +361,8 @@
     "readMore": "Read More"
   },
   "place_card": {
-    "active_below": "Active below ↓",
-    "details_open": "Details open below ↓",
+    "active_below": "Active below â†“",
+    "details_open": "Details open below â†“",
     "see_details": "View details"
   },
   "place_details": {
@@ -404,5 +404,85 @@
     "cta_title": "Ready for your stay in Nosy Be?",
     "cta_subtitle": "I offer custom guided tours across all these paradise spots. Contact me to plan your unforgettable trip.",
     "cta_btn": "Plan my trip"
+  },
+  "ui": {
+    "plan": "Plan my trip",
+    "discover": "Discover more",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow",
+    "language": "Language",
+    "light": "Switch to light mode",
+    "dark": "Switch to dark mode",
+    "menu": "Navigation menu",
+    "close": "Close",
+    "skip": "Skip to content",
+    "loading": "Loading…",
+    "notFound": "This page took a different path.",
+    "notFoundText": "Explore our destinations and plan your trip from the home page.",
+    "formPrivacy": "This form sends your inquiry through FormSubmit. Your booking will be confirmed separately.",
+    "showMap": "Show the map"
+  },
+  "journey": {
+    "eyebrow": "Your journey, made simple",
+    "title": "A great adventure starts with a conversation.",
+    "subtitle": "An itinerary designed together, around your interests and pace.",
+    "step1": {
+      "title": "Share your ideas",
+      "text": "Destinations, possible dates and group size: tell me about the trip you have in mind."
+    },
+    "step2": {
+      "title": "Shape your itinerary",
+      "text": "Together we discuss stops, activities, transport and the services you need."
+    },
+    "step3": {
+      "title": "Travel with confidence",
+      "text": "We agree on the itinerary and arrangements before confirming your trip."
+    }
+  },
+  "faq": {
+    "eyebrow": "Before you travel",
+    "title": "A few answers to get started.",
+    "subtitle": "Have something specific in mind? Let’s talk.",
+    "q1": "Can I customize my itinerary?",
+    "a1": "Yes. Share your interests, pace, group size and budget so we can prepare a suitable proposal.",
+    "q2": "Can I combine Diégo-Suarez and Nosy Be?",
+    "a2": "You can request a trip combining both destinations. We will agree on stops and transfers based on your available time.",
+    "q3": "How do I get a quote?",
+    "a3": "Send your dates, destinations and group size. Your proposal will detail included services, options and the price to agree before booking.",
+    "q4": "Does the form confirm my booking?",
+    "a4": "No. The form starts a conversation. A booking is confirmed after agreement on the itinerary, availability and arrangements."
+  },
+  "information": {
+    "privacy": {
+      "title": "Privacy & data",
+      "heading1": "Your travel inquiry",
+      "text1": "The form sends your name, email address and message, along with any travel information you provide, to FormSubmit, the service used to deliver inquiries.",
+      "heading2": "Preferences on this device",
+      "text2": "The website saves your language and theme in your browser’s local storage. You can remove these preferences in your browser settings.",
+      "heading3": "External services & contact",
+      "text3": "The map uses Google Maps. Fonts and some icons load from external services. WhatsApp links open a third-party service. For questions about the information in your inquiry, contact us by email."
+    },
+    "terms": {
+      "title": "Travel inquiry information",
+      "heading1": "Inquiry & confirmation",
+      "text1": "This site presents destinations and services. Sending a form or WhatsApp message does not confirm a booking.",
+      "heading2": "Itinerary & services",
+      "text2": "Agree on the itinerary, dates, availability, price and included services directly with your guide before confirmation.",
+      "heading3": "Trip arrangements",
+      "text3": "Ask about the payment, amendment and cancellation arrangements for your proposal before confirming. Excursions and their organization depend on local conditions."
+    }
+  },
+  "selectors": {
+    "languageHint": "Your journey, in your language.",
+    "undecided": "Let’s decide together",
+    "undecidedHint": "I would like some guidance",
+    "diegoHint": "Bays, nature and wide-open spaces",
+    "nosyHint": "Islands, beaches and turquoise lagoons",
+    "bothHint": "An itinerary between land and sea",
+    "destinationTitle": "Choose your destination",
+    "destinationHint": "Where would you love to go?",
+    "destinationPlaceholder": "Where would you like to go?"
   }
 }

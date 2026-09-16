@@ -1,139 +1,68 @@
-# ISLAND MADA TRAVEL
+# Island Mada Travel
 
-Site web vitrine React pour guide touristique indépendant à Madagascar, spécialisé dans les destinations de Diégo-Suarez et Nosy Be (province d'Antsiranana).
+Site React pour un guide local dans le nord de Madagascar : Diégo-Suarez et Nosy Be. Sept pages principales, cinq langues, thèmes clair et sombre.
 
-## 🚀 Installation
+## Démarrer
 
-### Prérequis
-
-- **Node.js** (version 18 ou supérieure) doit être installé sur votre machine
-  - Téléchargez-le sur : https://nodejs.org/
-
-### Étapes d'installation
-
-1. **Installer les dépendances**
-
-```bash
+```sh
 npm install
-```
-
-2. **Lancer le serveur de développement**
-
-```bash
 npm run dev
 ```
 
-3. **Ouvrir le site**
+Le serveur Vite utilise le port 5173. Pour consulter la version de production :
 
-Le site sera accessible sur `http://localhost:5173`
-
-## 📦 Technologies utilisées
-
-- **React 18** - Framework JavaScript
-- **Vite** - Build tool rapide
-- **React Router** - Navigation entre les pages
-- **TailwindCSS** - Framework CSS utilitaire
-- **Lucide React** - Icônes modernes
-
-## 📁 Structure du projet
-
-```
-ISLANDMADATRAVEL/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx       # Barre de navigation
-│   │   └── Footer.jsx       # Pied de page
-│   ├── pages/
-│   │   ├── Home.jsx         # Page d'accueil
-│   │   ├── Destinations.jsx # Page des destinations
-│   │   ├── Diego.jsx        # Page Diégo-Suarez
-│   │   ├── Nosy.jsx         # Page Nosy Be
-│   │   ├── Services.jsx     # Page services
-│   │   ├── About.jsx        # Page à propos
-│   │   └── Contact.jsx      # Page contact
-│   ├── App.jsx              # Composant principal
-│   ├── main.jsx             # Point d'entrée
-│   └── index.css            # Styles globaux
-├── index.html               # HTML de base
-├── package.json             # Dépendances
-├── vite.config.js           # Configuration Vite
-├── tailwind.config.js       # Configuration Tailwind
-└── postcss.config.js        # Configuration PostCSS
-```
-
-## 🎨 Personnalisation
-
-### Changer les couleurs
-
-Modifiez les couleurs dans `tailwind.config.js` :
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        DEFAULT: '#2D5A27',      // Vert principal
-        light: '#3d7a36',
-        dark: '#1a3d17',
-      },
-      secondary: {
-        DEFAULT: '#D4A017',        // Or/Jaune
-        light: '#E8B423',
-        dark: '#B8860B',
-      },
-    },
-  },
-}
-```
-
-### Modifier les images
-
-Les images actuelles utilisent Unsplash. Pour utiliser vos propres images :
-
-1. Créez un dossier `public/images/`
-2. Ajoutez vos images
-3. Modifiez les URLs dans les composants JSX
-
-### Personnaliser le formulaire de contact
-
-Le formulaire actuel affiche une alerte. Pour le rendre fonctionnel :
-
-- Utilisez Formspree, EmailJS, ou Netlify Forms
-- Ou créez un backend Node.js avec Express
-
-## 🌐 Build pour la production
-
-```bash
+```sh
 npm run build
+npm run preview -- --host 127.0.0.1 --port 4173
 ```
 
-Les fichiers build seront dans le dossier `dist/`.
+## Architecture
 
-## 📱 Déploiement
+- `src/index.css` : variables des deux thèmes, composants visuels et règles responsive.
+- `tailwind.config.js` : palette partagée et typographie.
+- `src/components/Hero.jsx` : en-tête photographique, contrôles manuels, pause et préférence de mouvement réduit.
+- `src/components/PlacesGrid.jsx` : grille des lieux et détails insérés après la rangée sélectionnée.
+- `src/components/ResponsiveImage.jsx` : sélection des variantes d’image selon la largeur d’affichage.
+- `src/context` : préférences de langue et de thème, avec stockage local facultatif.
+- `src/locales` : français, anglais, allemand, italien et espagnol ; repli sur le français si une clé manque.
+- `src/data` : contenus des lieux et métadonnées des images.
 
-### Vercel
+La taille racine reste à 16 px. Les titres, espacements et largeurs de contenu évoluent progressivement. La navigation compacte est utilisée sous 1180 px. La grille des lieux passe de 1 à 4 colonnes aux seuils 480, 768 et 1180 px.
 
-1. Poussez votre code sur GitHub
-2. Importez le projet sur Vercel
-3. Vercel détectera automatiquement Vite
+## Images
 
-### Netlify
+Les originaux sont conservés dans `src/images`. Les versions WebP sont dans `src/images/optimized`, avec des variantes pour les petits écrans et le manifeste `src/data/imageManifest.json`.
 
-1. Build command: `npm run build`
-2. Publish directory: `dist`
+Pour régénérer les images après ajout ou remplacement d’originaux, utiliser Python avec Pillow :
 
-### Autres hébergeurs
+```sh
+python scripts/optimize-images.py
+```
 
-Le dossier `dist/` peut être déployé sur n'importe quel hébergeur statique.
+Les versions principales sont limitées à 2400 × 1800 px, les petites versions à 768 × 768 px, en conservant les proportions et l’orientation EXIF. Le logo est limité à 160 × 160 px. Aucun original n’est écrasé. Les nouveaux imports de photos doivent viser le dossier `optimized` et utiliser `ResponsiveImage` lorsqu’une balise image est affichée.
 
-## 📞 Contact
+## Contact
 
-Pour toute question, contactez le propriétaire du site.
+Le formulaire utilise l’intégration FormSubmit existante, destinée à `islandmadatravel@gmail.com`. Une réussite nécessite un statut HTTP valide et un champ `success` positif. Une réponse d’activation n’est pas traitée comme une demande envoyée. Délai maximum de 20 secondes, prévention des doubles envois et conservation des données en cas d’échec.
 
-## 📄 Licence
+Les liens `/contact?destination=diego` et `/contact?destination=nosy` préremplissent la destination. WhatsApp reste accessible au +261 32 55 396 35. La carte Google Maps est chargée à la demande.
 
-Ce site est la propriété de ISLAND MADA TRAVEL. Tous droits réservés.
+La réception effective des e-mails dépend du service externe et de l’activation du destinataire. Les tests automatisés interceptent les requêtes et n’envoient aucun message réel.
 
----
+## Vérifications navigateur
 
-**Créé avec ❤️ et React pour ISLAND MADA TRAVEL**
+Avec la version de production ouverte sur le port 4173 :
+
+```sh
+npm run test:ui
+```
+
+Le script utilise Playwright installé localement ou le runtime Codex sur Windows. `PLAYWRIGHT_MODULE` permet d’indiquer un autre chemin vers son module, `QA_URL` une autre URL et `QA_BROWSER_CHANNEL` un autre navigateur Chromium installé.
+
+La suite couvre les sept pages en clair et sombre, aux largeurs 320, 360, 390, 768, 1024, 1366, 1440, 1920 et 2560 px. Elle vérifie les débordements, les titres, l’encodage, le menu clavier, les langues, le thème, les fiches de lieux et les états du formulaire. Captures et rapport JSON : `artifacts/qa`.
+
+Les petits formats sont simulés dans Chromium ; un appareil Android physique n’est pas utilisé par cette suite.
+
+## Déploiement
+
+`npm run build` génère `dist`. Le fichier `vercel.json` existant assure la réécriture des routes de l’application. Aucun déploiement n’est lancé automatiquement.

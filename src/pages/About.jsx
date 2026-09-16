@@ -1,37 +1,32 @@
-import { useState, useEffect } from 'react'
+import ResponsiveImage from '../components/ResponsiveImage'
+import Hero from '../components/Hero'
+import { useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
-import about4 from '../images/about/IMG20251113153333.jpg'
-import about5 from '../images/about/IMG_20250818_095525131_MF_PORTRAIT.jpg'
-import about6 from '../images/about/IMG_20250818_105958718_MF_PORTRAIT.jpg'
-import about7 from '../images/about/IMG_20250818_112042306.jpg'
-import about8 from '../images/about/IMG_20250901_105406224_MF_PORTRAIT.jpg'
-import about9 from '../images/about/IMG_20250901_114656041_MF_PORTRAIT.jpg'
-import about10 from '../images/about/IMG_20250901_114719079_MF_PORTRAIT.jpg'
-import about11 from '../images/about/IMG_20250902_131209829_MF_PORTRAIT.jpg'
+import about4 from '../images/optimized/about/IMG20251113153333.webp'
+import about5 from '../images/optimized/about/IMG_20250818_095525131_MF_PORTRAIT.webp'
+import about6 from '../images/optimized/about/IMG_20250818_105958718_MF_PORTRAIT.webp'
+import about7 from '../images/optimized/about/IMG_20250818_112042306.webp'
+import about8 from '../images/optimized/about/IMG_20250901_105406224_MF_PORTRAIT.webp'
+import about9 from '../images/optimized/about/IMG_20250901_114656041_MF_PORTRAIT.webp'
+import about10 from '../images/optimized/about/IMG_20250901_114719079_MF_PORTRAIT.webp'
+import about11 from '../images/optimized/about/IMG_20250902_131209829_MF_PORTRAIT.webp'
 
 const About = () => {
   const { t } = useLanguage()
-  const [heroIndex, setHeroIndex] = useState(0)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const heroImages = [
-    about4,
-    about5,
-    about6,
-    about7,
-    about8,
     about9,
-    about10,
+    about5,
     about11,
+    about6,
+    about4,
+    about8,
+    about7,
+    about10,
   ]
 
-  useEffect(() => {
-    const heroInterval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
-    return () => clearInterval(heroInterval)
-  }, [heroImages.length])
 
   const guideImages = [
     { url: about5, caption: 'Guidage dans la forêt de Montagne d\'Ambre' },
@@ -41,62 +36,11 @@ const About = () => {
     { url: about11, caption: 'Découverte de Nosy Be' },
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % guideImages.length)
-    }, 7000)
-
-    return () => clearInterval(interval)
-  }, [guideImages.length])
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImages[heroIndex]}
-            alt="À Propos"
-            className="w-full h-full object-cover transition-all duration-1000 scale-105"
-          />
-        </div>
-
-        <div className="container-custom text-center text-white relative z-10 px-4 min-w-0">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-4 flex items-center justify-center gap-3 break-words drop-shadow-lg">
-            <i className="fas fa-user text-emerald-400 shrink-0"></i> <span>{t('about.hero.title')}</span>
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto break-words drop-shadow-md">
-            {t('about.hero.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="https://wa.me/261325539635"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-8 py-3.5 rounded-full transition-all shadow-lg whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              {t('about.hero.cta_contact')}
-            </a>
-            <a
-              href="#about"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium px-8 py-3.5 rounded-full transition-all whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              {t('about.hero.cta_learn')}
-            </a>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10 shrink-0">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${index === heroIndex ? 'bg-emerald-400 scale-125' : 'bg-white/50 hover:bg-white/80'
-                }`}
-            />
-          ))}
-        </div>
-      </section>
+      <Hero images={heroImages} title={t('about.hero.title')} subtitle={t('about.hero.subtitle')} badge={t('navbar.about')} anchor="about"  actions={[{ to: '/contact', label: t('about.hero.cta_contact') }, { href: '#about', label: t('about.hero.cta_learn') }]} />
 
       {/* Main Content */}
       <div className="py-20 overflow-hidden" id="about">
@@ -120,7 +64,8 @@ const About = () => {
             </div>
 
             <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[360px] sm:h-[420px] border border-gray-100 dark:border-gray-800 min-w-0">
-              <img
+              <ResponsiveImage
+                loading="lazy" decoding="async"
                 src={guideImages[currentImageIndex].url}
                 alt={guideImages[currentImageIndex].caption}
                 className="w-full h-full object-cover transition-all duration-1000"
@@ -131,6 +76,7 @@ const About = () => {
                   {guideImages.map((_, index) => (
                     <button
                       key={index}
+                      aria-label={`Photo ${index + 1}`}
                       onClick={() => setCurrentImageIndex(index)}
                       className={`h-1.5 rounded-full transition-all ${index === currentImageIndex ? 'w-8 bg-emerald-400' : 'w-2 bg-white/50'
                         }`}

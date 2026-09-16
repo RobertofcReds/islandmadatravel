@@ -1,67 +1,23 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import fr from '../locales/fr.json'
 const LanguageContext = createContext()
-
-export const useLanguage = () => {
-  const context = useContext(LanguageContext)
-  if (!context) {
-    throw new Error('useLanguage doit être utilisé dans un LanguageProvider')
-  }
-  return context
-}
-
-export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'fr'
+const loaders = { en: () => import('../locales/en.json'), de: () => import('../locales/de.json'), it: () => import('../locales/it.json'), es: () => import('../locales/es.json'), fr: () => Promise.resolve({ default: fr }) }
+const supported = ['fr', 'en', 'de', 'it', 'es']
+const read = (object, path) => path.split('.').reduce((value, key) => value?.[key], object)
+export const useLanguage = () => useContext(LanguageContext)
+export function LanguageProvider({ children }) {
+  const [language, changeLanguage] = useState(() => {
+    try { const saved = localStorage.getItem('language'); return supported.includes(saved) ? saved : 'fr' } catch { return 'fr' }
   })
-  const [translations, setTranslations] = useState({})
-  const [loading, setLoading] = useState(true)
-
+  const [dictionary, setDictionary] = useState(fr)
   useEffect(() => {
-    localStorage.setItem('language', language)
+    let cancelled = false
+    loaders[language]().then(module => { if (!cancelled) setDictionary(module.default) }).catch(() => { if (!cancelled) setDictionary(fr) })
     document.documentElement.lang = language
+    try { localStorage.setItem('language', language) } catch { /* Storage can be disabled. */ }
+    return () => { cancelled = true }
   }, [language])
-
-  useEffect(() => {
-    const loadTranslations = async () => {
-      try {
-        const response = await import(`../locales/${language}.json`)
-        setTranslations(response.default)
-        setLoading(false)
-      } catch (error) {
-        console.error(`Failed to load translations for ${language}:`, error)
-        // Fallback to French if loading fails
-        try {
-          const fallback = await import(`../locales/fr.json`)
-          setTranslations(fallback.default)
-        } catch (fallbackError) {
-          console.error('Failed to load fallback translations:', fallbackError)
-        }
-        setLoading(false)
-      }
-    }
-
-    loadTranslations()
-  }, [language])
-
-  const t = (path) => {
-    if (loading) return path
-    const keys = path.split('.')
-    let result = translations
-    
-    for (const key of keys) {
-      if (result && result[key]) {
-        result = result[key]
-      } else {
-        return path
-      }
-    }
-    return result
-  }
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, loading }}>
-      {children}
-    </LanguageContext.Provider>
-  )
+  const t = useCallback(path => read(dictionary, path) ?? read(fr, path) ?? path, [dictionary])
+  const setLanguage = code => { if (supported.includes(code)) changeLanguage(code) }
+  return <LanguageContext.Provider value={{ language, setLanguage, t, loading: false }}>{children}</LanguageContext.Provider>
 }

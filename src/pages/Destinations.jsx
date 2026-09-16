@@ -1,94 +1,50 @@
+import Hero from '../components/Hero'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
-import diegoTroisBaies from '../images/destination/Les Trois Baies.jpg'
-import diegoMontagneAmbre from '../images/destination/Forêt de Montagne d\'Ambre.jpg'
-import diegoTsingyRouges from '../images/destination/Tsingy Rouges.jpg'
-import diegoRamena from '../images/destination/Plage de Ramena.jpg'
-import diegoMerEmeraude from '../images/destination/Mer d\'Émeraude.jpg'
-import nosyParfums from '../images/destination/Nosy Be - Île aux Parfums.jpg'
-import nosyIranja from '../images/destination/Nosy Iranja.jpg'
-import nosyTanikely from '../images/destination/Nosy Tanikely.jpg'
-import nosyAndilana from '../images/destination/Plage d\'Andilana.jpg'
-import nosyKomba from '../images/destination/Nosy Komba.jpg'
+import diegoTroisBaies from '../images/optimized/destination/Les Trois Baies.webp'
+import diegoMontagneAmbre from '../images/optimized/destination/Forêt de Montagne d\'Ambre.webp'
+import diegoTsingyRouges from '../images/optimized/destination/Tsingy Rouges.webp'
+import diegoRamena from '../images/optimized/destination/Plage de Ramena.webp'
+import diegoMerEmeraude from '../images/optimized/destination/Mer d\'Émeraude.webp'
+import nosyParfums from '../images/optimized/destination/Nosy Be - Île aux Parfums.webp'
+import nosyIranja from '../images/optimized/destination/Nosy Iranja.webp'
+import nosyTanikely from '../images/optimized/destination/Nosy Tanikely.webp'
+import nosyAndilana from '../images/optimized/destination/Plage d\'Andilana.webp'
+import nosyKomba from '../images/optimized/destination/Nosy Komba.webp'
+
+// HD images
+import hdCapDiego from '../images/optimized/diego/031-cap diego_three.webp'
+import hdAmbre from '../images/optimized/diego/026-ambre.webp'
+import hdCascade from '../images/optimized/nosy/021-cascade_caption.webp'
 
 const Destinations = () => {
   const { t } = useLanguage()
-  const [heroIndex, setHeroIndex] = useState(0)
 
   const heroImages = [
-    diegoMerEmeraude,
-    nosyIranja,
-    diegoTroisBaies,
-    nosyParfums,
-    diegoMontagneAmbre,
     nosyTanikely,
-    diegoTsingyRouges,
-    nosyAndilana,
-    diegoRamena,
+    hdAmbre,
+    diegoTroisBaies,
     nosyKomba,
+    hdCascade,
+    diegoTsingyRouges,
+    nosyParfums,
+    hdCapDiego,
+    diegoRamena,
+    nosyIranja,
+    diegoMontagneAmbre,
+    nosyAndilana,
+    diegoMerEmeraude,
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [heroImages.length])
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImages[heroIndex]}
-            alt="Destinations"
-            className="w-full h-full object-cover transition-all duration-1000 scale-105"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="container-custom text-center text-white relative z-10 px-4 min-w-0">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-4 flex items-center justify-center gap-3 break-words drop-shadow-lg">
-            <i className="fas fa-map-marked-alt text-emerald-400 shrink-0"></i> <span>{t('destinations.hero.title')}</span>
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto break-words drop-shadow-md">
-            {t('destinations.hero.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link 
-              to="/diego" 
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-8 py-3.5 rounded-full transition-all shadow-lg flex items-center justify-center gap-2 whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              {t('destinations.hero.cta_diego')}
-            </Link>
-            <Link 
-              to="/nosy" 
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium px-8 py-3.5 rounded-full transition-all flex items-center justify-center gap-2 whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              {t('destinations.hero.cta_nosy')}
-            </Link>
-          </div>
-        </div>
-
-        {/* Dots */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10 shrink-0">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === heroIndex ? 'bg-emerald-400 scale-125' : 'bg-white/50 hover:bg-white/80'
-              }`}
-            />
-          ))}
-        </div>
-      </section>
+      <Hero images={heroImages} title={t('destinations.hero.title')} subtitle={t('destinations.hero.subtitle')} badge={t('navbar.destinations')} anchor="page-content"  actions={[{ to: '/diego', label: t('destinations.hero.cta_diego') }, { to: '/nosy', label: t('destinations.hero.cta_nosy') }]} />
 
       {/* Main Content */}
-      <div className="py-20 overflow-hidden">
+      <div id="page-content" className="py-20 overflow-hidden">
         <div className="container-custom max-w-7xl mx-auto px-6">
           <div className="text-center mb-16 min-w-0">
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 break-words">
@@ -101,7 +57,7 @@ const Destinations = () => {
         
           <div className="grid md:grid-cols-2 gap-10 min-w-0">
             {/* Diégo-Suarez Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between min-w-0">
+            <div className="travel-card bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between min-w-0">
               <div className="min-w-0">
                 <div 
                   className="relative h-72 bg-cover bg-center min-w-0"
@@ -146,7 +102,7 @@ const Destinations = () => {
               <div className="p-6 sm:p-8 pt-0 min-w-0">
                 <Link 
                   to="/diego" 
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-xl transition-all text-center block shadow-md hover:shadow-emerald-500/20 whitespace-nowrap truncate shrink-0"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-xl transition-all text-center block shadow-md hover:shadow-emerald-500/20 whitespace-normal shrink-0"
                 >
                   {t('destinations.content.diego.cta')} <i className="fas fa-arrow-right ml-2 shrink-0"></i>
                 </Link>
@@ -154,7 +110,7 @@ const Destinations = () => {
             </div>
 
             {/* Nosy Be Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between min-w-0">
+            <div className="travel-card bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between min-w-0">
               <div className="min-w-0">
                 <div 
                   className="relative h-72 bg-cover bg-center min-w-0"
@@ -199,7 +155,7 @@ const Destinations = () => {
               <div className="p-6 sm:p-8 pt-0 min-w-0">
                 <Link 
                   to="/nosy" 
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-xl transition-all text-center block shadow-md hover:shadow-emerald-500/20 whitespace-nowrap truncate shrink-0"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-xl transition-all text-center block shadow-md hover:shadow-emerald-500/20 whitespace-normal shrink-0"
                 >
                   {t('destinations.content.nosy.cta')} <i className="fas fa-arrow-right ml-2 shrink-0"></i>
                 </Link>

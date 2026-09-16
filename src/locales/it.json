@@ -361,8 +361,8 @@
     "readMore": "Leggi di più"
   },
   "place_card": {
-    "active_below": "Attivo sotto ↓",
-    "details_open": "Dettagli aperti sotto ↓",
+    "active_below": "Attivo sotto â†“",
+    "details_open": "Dettagli aperti sotto â†“",
     "see_details": "Vedi dettagli"
   },
   "place_details": {
@@ -404,5 +404,85 @@
     "cta_title": "Pronto per il tuo soggiorno a Nosy Be?",
     "cta_subtitle": "Vi guido su misura attraverso tutti questi luoghi paradisiaci. Contattatemi per pianificare il vostro viaggio indimenticabile.",
     "cta_btn": "Pianifica il mio viaggio"
+  },
+  "ui": {
+    "plan": "Organizza il viaggio",
+    "discover": "Scopri di più",
+    "previous": "Foto precedente",
+    "next": "Foto successiva",
+    "pause": "Pausa presentazione",
+    "play": "Avvia presentazione",
+    "language": "Lingua",
+    "light": "Attiva tema chiaro",
+    "dark": "Attiva tema scuro",
+    "menu": "Menu di navigazione",
+    "close": "Chiudi",
+    "skip": "Vai al contenuto",
+    "loading": "Caricamento…",
+    "notFound": "Questa pagina ha preso un’altra strada.",
+    "notFoundText": "Scopri le nostre destinazioni dalla pagina iniziale.",
+    "formPrivacy": "Il modulo invia la richiesta tramite FormSubmit. La prenotazione sarà confermata separatamente.",
+    "showMap": "Mostra la mappa"
+  },
+  "journey": {
+    "eyebrow": "Il tuo viaggio, con semplicità",
+    "title": "Una bella avventura inizia con una conversazione.",
+    "subtitle": "Un itinerario costruito insieme, secondo i tuoi desideri e il tuo ritmo.",
+    "step1": {
+      "title": "Condividi i tuoi desideri",
+      "text": "Destinazioni, date e numero di viaggiatori: raccontami il viaggio che immagini."
+    },
+    "step2": {
+      "title": "Disegniamo l’itinerario",
+      "text": "Definiamo insieme tappe, attività, trasporti e servizi."
+    },
+    "step3": {
+      "title": "Parti con serenità",
+      "text": "Concordiamo programma e modalità prima di confermare il soggiorno."
+    }
+  },
+  "faq": {
+    "eyebrow": "Prima di partire",
+    "title": "Qualche risposta per iniziare.",
+    "subtitle": "Hai un progetto particolare? Parliamone.",
+    "q1": "Posso personalizzare il circuito?",
+    "a1": "Sì. Indica interessi, ritmo, numero di viaggiatori e budget per ricevere una proposta adatta.",
+    "q2": "Posso combinare Diégo-Suarez e Nosy Be?",
+    "a2": "Puoi richiedere un viaggio che comprenda entrambe le destinazioni. Tappe e trasferimenti dipenderanno dal tempo a disposizione.",
+    "q3": "Come ricevo un preventivo?",
+    "a3": "Invia date, destinazioni e numero di partecipanti. La proposta indicherà servizi inclusi, opzioni e prezzo da concordare prima della prenotazione.",
+    "q4": "Il modulo conferma la prenotazione?",
+    "a4": "No. Il modulo avvia il contatto. La prenotazione sarà confermata dopo aver concordato programma, disponibilità e modalità."
+  },
+  "information": {
+    "privacy": {
+      "title": "Privacy e dati",
+      "heading1": "La tua richiesta di viaggio",
+      "text1": "Il modulo invia nome, e-mail, messaggio e informazioni di viaggio facoltative a FormSubmit, il servizio utilizzato per recapitare le richieste.",
+      "heading2": "Preferenze su questo dispositivo",
+      "text2": "Il sito salva lingua e tema nella memoria locale del browser. Puoi eliminare queste preferenze nelle impostazioni del browser.",
+      "heading3": "Servizi esterni e contatti",
+      "text3": "La mappa utilizza Google Maps. Caratteri e alcune icone sono caricati da servizi esterni. I link WhatsApp aprono un servizio di terze parti. Per domande sui dati della tua richiesta, contattaci via e-mail."
+    },
+    "terms": {
+      "title": "Informazioni sulle richieste di viaggio",
+      "heading1": "Richiesta e conferma",
+      "text1": "Il sito presenta destinazioni e servizi. L’invio del modulo o di un messaggio WhatsApp non conferma una prenotazione.",
+      "heading2": "Programma e servizi",
+      "text2": "Itinerario, date, disponibilità, prezzo e servizi inclusi vanno concordati con la guida prima della conferma.",
+      "heading3": "Modalità del soggiorno",
+      "text3": "Richiedi le modalità di pagamento, modifica e cancellazione della proposta prima di confermare. Le escursioni vengono adattate alle condizioni locali."
+    }
+  },
+  "selectors": {
+    "languageHint": "Il tuo viaggio, nella tua lingua.",
+    "undecided": "Decidiamo insieme",
+    "undecidedHint": "Vorrei un consiglio",
+    "diegoHint": "Baie, natura e grandi spazi",
+    "nosyHint": "Isole, spiagge e lagune turchesi",
+    "bothHint": "Un itinerario tra terra e mare",
+    "destinationTitle": "Scegli la destinazione",
+    "destinationHint": "Quale orizzonte ti fa sognare?",
+    "destinationPlaceholder": "Dove vorresti andare?"
   }
 }

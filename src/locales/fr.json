@@ -13,15 +13,15 @@
   },
   "home": {
     "hero": {
-      "badge": "Guide Touristique d'Exception",
-      "title": "Découvrez la Magie de Madagascar",
-      "subtitle": "Guide touristique indépendant & tours personnalisés à Diégo-Suarez & Nosy Be",
-      "cta_explore": "Explorer nos Destinations",
+      "badge": "Voyages sur mesure · Madagascar",
+      "title": "Madagascar, au rythme de vos envies.",
+      "subtitle": "Des lagons de Nosy Be aux terres sauvages de Diégo-Suarez, découvrez le nord de Madagascar avec un guide local passionné.",
+      "cta_explore": "Explorer les destinations",
       "cta_contact": "Me Contacter"
     },
     "destinations": {
-      "title": "Nos Destinations",
-      "subtitle": "Explorez les merveilles captivantes de la province d'Antsiranana",
+      "title": "Deux horizons, mille découvertes.",
+      "subtitle": "Choisissez votre point de départ. Nous imaginons la suite ensemble.",
       "diego": {
         "badge": "Destination Principale",
         "title": "Province de Diégo-Suarez",
@@ -46,7 +46,7 @@
       }
     },
     "services": {
-      "title": "Mes Services",
+      "title": "Le plaisir de voyager, l’esprit libre.",
       "subtitle": "Un accompagnement sur-mesure pour un séjour fluide et inoubliable",
       "guiding": {
         "title": "Guidage Touristique",
@@ -82,7 +82,7 @@
   },
   "about": {
     "hero": {
-      "title": "À Propos de Moi",
+      "title": "Une île, une passion. Votre guide.",
       "subtitle": "Votre guide touristique indépendant passionné à Madagascar",
       "cta_contact": "Me Contacter",
       "cta_learn": "En savoir plus"
@@ -116,7 +116,7 @@
   },
   "contact": {
     "hero": {
-      "title": "Contactez-Moi",
+      "title": "Votre prochain voyage commence ici.",
       "subtitle": "Prêt à planifier votre aventure malgache à Diégo-Suarez et Nosy Be ?",
       "cta_whatsapp": "WhatsApp Direct",
       "cta_form": "Formulaire de contact"
@@ -162,7 +162,7 @@
   },
   "destinations": {
     "hero": {
-      "title": "Nos Destinations",
+      "title": "Le nord de Madagascar vous attend.",
       "subtitle": "Explorez les merveilles de la province d'Antsiranana et de ses archipels",
       "cta_diego": "Diégo-Suarez",
       "cta_nosy": "Nosy Be"
@@ -274,7 +274,7 @@
   },
   "services": {
     "hero": {
-      "title": "Mes Services",
+      "title": "Chaque détail compte. Votre voyage aussi.",
       "subtitle": "Un accompagnement sur-mesure pour vivre des aventures uniques à Madagascar",
       "cta_contact": "Me Contacter",
       "cta_list": "Découvrir la liste"
@@ -361,7 +361,7 @@
     "readMore": "Lire la suite"
   },
   "place_card": {
-    "active_below": "Actif en bas ↓",
+    "active_below": "Actif en bas â†“",
     "details_open": "Détails ouverts en bas ↓",
     "see_details": "Voir les détails"
   },
@@ -404,5 +404,85 @@
     "cta_title": "Prêt pour votre séjour à Nosy Be ?",
     "cta_subtitle": "Je vous guide sur mesure à travers tous ces lieux paradisiaques. Contactez-moi pour planifier votre voyage inoubliable.",
     "cta_btn": "Planifier mon voyage"
+  },
+  "ui": {
+    "plan": "Préparer mon voyage",
+    "discover": "Découvrir la suite",
+    "previous": "Photo précédente",
+    "next": "Photo suivante",
+    "pause": "Mettre le diaporama en pause",
+    "play": "Lancer le diaporama",
+    "language": "Langue",
+    "light": "Passer au mode clair",
+    "dark": "Passer au mode sombre",
+    "menu": "Menu de navigation",
+    "close": "Fermer",
+    "skip": "Aller au contenu",
+    "loading": "Chargement…",
+    "notFound": "Cette page a pris un autre chemin.",
+    "notFoundText": "Retrouvez nos destinations et préparez votre voyage depuis l’accueil.",
+    "formPrivacy": "Ce formulaire transmet votre demande via FormSubmit. La réservation sera confirmée séparément.",
+    "showMap": "Afficher la carte"
+  },
+  "journey": {
+    "eyebrow": "Votre voyage, simplement",
+    "title": "Une belle aventure commence par une conversation.",
+    "subtitle": "Un itinéraire pensé ensemble, selon vos envies et votre rythme.",
+    "step1": {
+      "title": "Partagez vos envies",
+      "text": "Destinations, dates envisagées, nombre de voyageurs : racontez-moi le séjour dont vous rêvez."
+    },
+    "step2": {
+      "title": "Dessinons votre itinéraire",
+      "text": "Nous échangeons sur les étapes, les activités, les transports et les prestations à prévoir."
+    },
+    "step3": {
+      "title": "Partez l’esprit libre",
+      "text": "Le programme et les modalités sont convenus avec vous avant de confirmer votre séjour."
+    }
+  },
+  "faq": {
+    "eyebrow": "Avant de partir",
+    "title": "Quelques réponses pour commencer.",
+    "subtitle": "Un projet particulier ? Parlons-en ensemble.",
+    "q1": "Puis-je personnaliser mon circuit ?",
+    "a1": "Oui. Indiquez vos envies, votre rythme, le nombre de voyageurs et votre budget pour construire une proposition adaptée.",
+    "q2": "Peut-on combiner Diégo-Suarez et Nosy Be ?",
+    "a2": "Vous pouvez demander un programme combinant les deux destinations. Les étapes et les transferts seront définis avec vous selon la durée de votre séjour.",
+    "q3": "Comment obtenir un tarif ?",
+    "a3": "Envoyez vos dates, vos destinations et le nombre de participants. Une proposition précisera les prestations incluses, les options et le montant à confirmer avant toute réservation.",
+    "q4": "Le formulaire confirme-t-il ma réservation ?",
+    "a4": "Non. Le formulaire permet de prendre contact. La réservation sera confirmée après accord sur le programme, les disponibilités et les modalités."
+  },
+  "information": {
+    "privacy": {
+      "title": "Confidentialité & données",
+      "heading1": "Votre demande de voyage",
+      "text1": "Le formulaire transmet votre nom, votre adresse e-mail et votre message, ainsi que les informations de voyage que vous choisissez de renseigner, au service FormSubmit utilisé pour l’envoi des demandes.",
+      "heading2": "Vos préférences sur cet appareil",
+      "text2": "Le site conserve votre langue et votre choix de thème dans le stockage local du navigateur. Vous pouvez effacer ces préférences dans les paramètres de votre navigateur.",
+      "heading3": "Services externes & contact",
+      "text3": "La carte utilise Google Maps. Les polices et certaines icônes sont chargées auprès de services externes. Les liens WhatsApp ouvrent un service tiers. Pour une question concernant les informations de votre demande, contactez-nous par e-mail."
+    },
+    "terms": {
+      "title": "Informations sur les demandes de voyage",
+      "heading1": "Demande & confirmation",
+      "text1": "Le site présente des destinations et des prestations. Une demande par formulaire ou WhatsApp ne constitue pas une réservation confirmée.",
+      "heading2": "Programme & prestations",
+      "text2": "L’itinéraire, les dates, les disponibilités, le tarif et les prestations incluses sont à convenir directement avec votre guide avant confirmation.",
+      "heading3": "Modalités du séjour",
+      "text3": "Demandez les modalités de paiement, de modification et d’annulation applicables à votre proposition avant de confirmer. Les sorties et leur organisation sont à adapter aux conditions locales."
+    }
+  },
+  "selectors": {
+    "languageHint": "Votre voyage, dans votre langue.",
+    "undecided": "À définir ensemble",
+    "undecidedHint": "Je souhaite être conseillé",
+    "diegoHint": "Baies, nature et grands espaces",
+    "nosyHint": "Îles, plages et lagons turquoise",
+    "bothHint": "Un itinéraire entre terre et mer",
+    "destinationTitle": "Choisissez votre destination",
+    "destinationHint": "Quel horizon vous fait rêver ?",
+    "destinationPlaceholder": "Où souhaitez-vous partir ?"
   }
 }

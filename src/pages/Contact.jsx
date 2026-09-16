@@ -1,38 +1,46 @@
-import { useState, useEffect, useRef } from 'react'
+import LocationMap from '../components/LocationMap'
+import DestinationSelector from '../components/DestinationSelector'
+import { Link, useSearchParams } from 'react-router-dom'
+import useDialog from '../hooks/useDialog'
+import { FAQ } from '../components/Journey'
+import Hero from '../components/Hero'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
-import diegoMerEmeraude from '../images/destination/Mer d\'Émeraude.jpg'
-import nosyIranja from '../images/destination/Nosy Iranja.jpg'
-import diegoTroisBaies from '../images/destination/Les Trois Baies.jpg'
-import nosyParfums from '../images/destination/Nosy Be - Île aux Parfums.jpg'
-import diegoRamena from '../images/destination/Plage de Ramena.jpg'
-import nosyAndilana from '../images/destination/Plage d\'Andilana.jpg'
+import diegoMerEmeraude from '../images/optimized/destination/Mer d\'Émeraude.webp'
+import nosyIranja from '../images/optimized/destination/Nosy Iranja.webp'
+import diegoTroisBaies from '../images/optimized/destination/Les Trois Baies.webp'
+import nosyParfums from '../images/optimized/destination/Nosy Be - Île aux Parfums.webp'
+import diegoRamena from '../images/optimized/destination/Plage de Ramena.webp'
+import nosyAndilana from '../images/optimized/destination/Plage d\'Andilana.webp'
+
+// HD images
+import hdCapDiego from '../images/optimized/diego/031-cap diego_three.webp'
+import hdNosyBeach from '../images/optimized/nosy/019-caption.webp'
 
 const Contact = () => {
-  const { t, language } = useLanguage()
-  const [heroIndex, setHeroIndex] = useState(0)
+  const { t } = useLanguage()
+  const [searchParams] = useSearchParams()
+  const requestedDestination = searchParams.get('destination')
+  const initialDestination = ['diego', 'nosy', 'both'].includes(requestedDestination) ? requestedDestination : ''
 
   const heroImages = [
-    diegoMerEmeraude,
     nosyIranja,
+    hdCapDiego,
     diegoTroisBaies,
+    nosyAndilana,
+    hdNosyBeach,
+    diegoMerEmeraude,
     nosyParfums,
     diegoRamena,
-    nosyAndilana,
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [heroImages.length])
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    destination: '',
+    destination: initialDestination,
     dates: '',
     message: ''
   })
@@ -40,17 +48,14 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState(null) // null | 'submitting' | 'success' | 'error'
   const [isModalOpen, setIsModalOpen] = useState(false)
   const formTopRef = useRef(null)
+  const formRef = useRef(null)
+  const modalRef = useRef(null)
+  const sendingRef = useRef(false)
+  const requestRef = useRef(null)
+  const closeModal = useCallback(() => setIsModalOpen(false), [])
+  useDialog(modalRef, isModalOpen, closeModal)
+  useEffect(() => () => requestRef.current?.abort(), [])
 
-  // Listen for Escape key to close modal
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        setIsModalOpen(false)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isModalOpen])
 
   const getWhatsAppLink = () => {
     const text = `Bonjour Roberto, je vous contacte depuis le site Island Mada Travel.\n\n*Nom :* ${formData.name || 'Voyageur'}\n*Destination :* ${formData.destination || 'Non spécifiée'}\n*Dates :* ${formData.dates || 'À définir'}\n*Message :* ${formData.message || 'Demande d\'informations'}`
@@ -59,6 +64,12 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault()
+    if (sendingRef.current || !formRef.current?.reportValidity()) return
+    sendingRef.current = true
+    setIsModalOpen(false)
+    const controller = new AbortController()
+    requestRef.current = controller
+    const timeout = setTimeout(() => controller.abort(), 20000)
     setSubmitStatus('submitting')
 
     let destinationLabel = 'Non spécifiée'
@@ -68,8 +79,9 @@ const Contact = () => {
     else if (formData.destination) destinationLabel = formData.destination
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/judicaelroberto@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/islandmadatravel@gmail.com', {
         method: 'POST',
+        signal: controller.signal,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -90,7 +102,7 @@ const Contact = () => {
 
       const data = await response.json().catch(() => ({}))
 
-      if (response.ok || (data && (data.success === 'true' || data.success === true || (data.message && data.message.includes('Activation'))))) {
+      if (response.ok && (data.success === 'true' || data.success === true) && !/activat/i.test(data.message || '')) {
         setSubmitStatus('success')
         setIsModalOpen(true)
         setFormData({
@@ -108,6 +120,10 @@ const Contact = () => {
       console.error('Erreur lors de l\'envoi du formulaire:', error)
       setSubmitStatus('error')
       setIsModalOpen(true)
+    } finally {
+      clearTimeout(timeout)
+      sendingRef.current = false
+      requestRef.current = null
     }
   }
 
@@ -123,10 +139,11 @@ const Contact = () => {
       {/* Centered Notification Modal */}
       {isModalOpen && submitStatus && submitStatus !== 'submitting' && (
         <div
+          ref={modalRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby="contact-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md transition-all animate-fadeIn"
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md transition-all animate-fadeIn"
           onClick={() => setIsModalOpen(false)}
         >
           <div
@@ -269,53 +286,7 @@ const Contact = () => {
       )}
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImages[heroIndex]}
-            alt="Contact"
-            className="w-full h-full object-cover transition-all duration-1000 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"></div>
-        </div>
-
-        <div className="container-custom text-center text-white relative z-10 px-4 min-w-0">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold mb-4 flex items-center justify-center gap-3 break-words">
-            <i className="fas fa-envelope text-emerald-400 shrink-0"></i> <span>{t('contact.hero.title')}</span>
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto break-words">
-            {t('contact.hero.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="https://wa.me/261325539635"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-8 py-3.5 rounded-full transition-all shadow-lg flex items-center justify-center gap-2 whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              <i className="fab fa-whatsapp text-xl shrink-0"></i> <span>{t('contact.hero.cta_whatsapp')}</span>
-            </a>
-            <a
-              href="#contact-form"
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md font-medium px-8 py-3.5 rounded-full transition-all whitespace-nowrap shrink-0 max-w-full truncate text-center"
-            >
-              {t('contact.hero.cta_form')}
-            </a>
-          </div>
-        </div>
-
-        {/* Carousel Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10 shrink-0">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${index === heroIndex ? 'bg-emerald-400 scale-125' : 'bg-white/50 hover:bg-white/80'
-                }`}
-            />
-          ))}
-        </div>
-      </section>
+      <Hero images={heroImages} title={t('contact.hero.title')} subtitle={t('contact.hero.subtitle')} badge={t('navbar.contact')} anchor="contact-form"  actions={[{ href: '#contact-form', label: t('contact.hero.cta_form') }, { href: 'https://wa.me/261325539635', label: t('contact.hero.cta_whatsapp') }]} />
 
       {/* Main Content */}
       <div className="py-20 overflow-hidden" id="contact-form">
@@ -351,8 +322,8 @@ const Contact = () => {
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-semibold text-lg text-gray-900 dark:text-white break-words">{t('contact.info.email')}</h4>
-                    <a href="mailto:judicaelroberto@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-emerald-500 transition-colors break-all block min-w-0">
-                      judicaelroberto@gmail.com
+                    <a href="mailto:islandmadatravel@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-emerald-500 transition-colors break-all block min-w-0">
+                      islandmadatravel@gmail.com
                     </a>
                   </div>
                 </div>
@@ -375,23 +346,13 @@ const Contact = () => {
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-semibold text-lg text-gray-900 dark:text-white break-words">{t('contact.info.whatsapp')}</h4>
-                    <p className="text-gray-600 dark:text-gray-300 whitespace-nowrap">+261 32 55 396 35</p>
+                    <a className="text-gray-600 dark:text-gray-300 whitespace-nowrap" href="https://wa.me/261325539635" target="_blank" rel="noopener noreferrer">+261 32 55 396 35</a>
                   </div>
                 </div>
               </div>
 
               {/* Map Box */}
-              <div className="mt-8 rounded-2xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-800 h-64 min-w-0">
-                <iframe
-                  title="Diégo-Suarez Map"
-                  src={`https://maps.google.com/maps?q=Antsiranana%20Madagascar&t=&z=12&ie=UTF8&iwloc=&output=embed&hl=${language}`}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                ></iframe>
-              </div>
+              <LocationMap />
             </div>
 
             {/* Contact Form Side */}
@@ -509,7 +470,7 @@ const Contact = () => {
                       <div className="mt-4 pt-3 border-t border-rose-200/70 dark:border-rose-800/50 flex flex-wrap items-center gap-3">
                         <button
                           type="button"
-                          onClick={handleSubmit}
+                          onClick={() => formRef.current?.requestSubmit()}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-md shadow-rose-600/20 transition-all"
                         >
                           <i className="fas fa-redo-alt"></i>
@@ -531,45 +492,51 @@ const Contact = () => {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-5 min-w-0">
+              <form ref={formRef} onSubmit={handleSubmit} aria-busy={submitStatus === 'submitting'} className="space-y-5 min-w-0">
                 <div className="min-w-0">
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_name')}</label>
+                  <label htmlFor="contact-name" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_name')}</label>
                   <input
                     type="text"
+                    id="contact-name"
                     name="name"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
                     disabled={submitStatus === 'submitting'}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all dark:text-white min-w-0 disabled:opacity-60"
+                    className="contact-input min-w-0 disabled:opacity-60"
                     placeholder={t('contact.form.placeholder_name')}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 min-w-0">
                   <div className="min-w-0">
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_email')}</label>
+                    <label htmlFor="contact-email" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_email')}</label>
                     <input
                       type="email"
-                      name="email"
+                      id="contact-email"
+                    name="email"
+                    autoComplete="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
                       disabled={submitStatus === 'submitting'}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all dark:text-white min-w-0 disabled:opacity-60"
+                      className="contact-input min-w-0 disabled:opacity-60"
                       placeholder={t('contact.form.placeholder_email')}
                     />
                   </div>
 
                   <div className="min-w-0">
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_phone')}</label>
+                    <label htmlFor="contact-phone" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_phone')}</label>
                     <input
                       type="tel"
-                      name="phone"
+                      id="contact-phone"
+                    name="phone"
+                    autoComplete="tel"
                       value={formData.phone}
                       onChange={handleChange}
                       disabled={submitStatus === 'submitting'}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all dark:text-white min-w-0 disabled:opacity-60"
+                      className="contact-input min-w-0 disabled:opacity-60"
                       placeholder={t('contact.form.placeholder_phone')}
                     />
                   </div>
@@ -577,45 +544,39 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 min-w-0">
                   <div className="min-w-0">
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_destination')}</label>
-                    <select
-                      name="destination"
-                      value={formData.destination}
-                      onChange={handleChange}
-                      disabled={submitStatus === 'submitting'}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all dark:text-white min-w-0 truncate disabled:opacity-60"
-                    >
-                      <option value="">{t('contact.form.select_destination')}</option>
-                      <option value="diego">{t('contact.form.option_diego')}</option>
-                      <option value="nosy">{t('contact.form.option_nosy')}</option>
-                      <option value="both">{t('contact.form.option_both')}</option>
-                    </select>
+                    <label htmlFor="contact-destination" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_destination')}</label>
+                    <DestinationSelector value={formData.destination}
+                      onChange={destination => setFormData(previous => ({ ...previous, destination }))}
+                      disabled={submitStatus === 'submitting'} />
                   </div>
 
                   <div className="min-w-0">
-                    <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_dates')}</label>
+                    <label htmlFor="contact-dates" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_dates')}</label>
                     <input
                       type="text"
-                      name="dates"
+                      id="contact-dates"
+                    name="dates"
                       value={formData.dates}
                       onChange={handleChange}
                       disabled={submitStatus === 'submitting'}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all dark:text-white min-w-0 disabled:opacity-60"
+                      className="contact-input min-w-0 disabled:opacity-60"
                       placeholder={t('contact.form.placeholder_dates')}
                     />
                   </div>
                 </div>
 
                 <div className="min-w-0">
-                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_message')}</label>
+                  <label htmlFor="contact-message" className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300 break-words">{t('contact.form.label_message')}</label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    rows="4"
+                    rows="5"
+                    maxLength={5000}
                     disabled={submitStatus === 'submitting'}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700/50 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all resize-none dark:text-white min-w-0 disabled:opacity-60"
+                    className="contact-input resize-none min-w-0 disabled:opacity-60"
                     placeholder={t('contact.form.placeholder_message')}
                   />
                 </div>
@@ -640,11 +601,13 @@ const Contact = () => {
                     </>
                   )}
                 </button>
+                <p className="form-note">{t('ui.formPrivacy')} <Link to="/privacy">{t('footer.privacy')}</Link></p>
               </form>
             </div>
           </div>
         </div>
       </div>
+      <FAQ />
     </div>
   )
 }

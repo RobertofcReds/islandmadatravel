@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, X, MapPin, Clock, Star, Info, Camera, BookOpen, MessageCircle, ArrowUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -7,7 +8,7 @@ const PlaceDetailSection = ({ place, onClose }) => {
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState('story')
   const [imgIndex, setImgIndex] = useState(0)
-  const [imgLoaded, setImgLoaded] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(true)
   const sectionRef = useRef(null)
 
   // Scroll automatique doux vers cette section dès qu'un lieu est choisi
@@ -16,7 +17,7 @@ const PlaceDetailSection = ({ place, onClose }) => {
       setImgIndex(0)
       setActiveTab('story')
       const timer = setTimeout(() => {
-        sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 80)
       return () => clearTimeout(timer)
     }
@@ -88,11 +89,12 @@ const PlaceDetailSection = ({ place, onClose }) => {
       {/* Hero visuel panoramique du lieu */}
       <div className="relative h-60 sm:h-80 md:h-96 lg:h-[420px] bg-gray-900 group overflow-hidden w-full max-w-full">
         {place.images?.[imgIndex] && (
-          <img
+          <ResponsiveImage
             key={imgIndex}
             src={place.images[imgIndex].url}
             alt={place.images[imgIndex].caption || place.name}
             onLoad={() => setImgLoaded(true)}
+            onError={() => setImgLoaded(true)}
             className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
               imgLoaded ? 'opacity-100' : 'opacity-0'
             }`}
@@ -108,14 +110,14 @@ const PlaceDetailSection = ({ place, onClose }) => {
           <>
             <button
               onClick={prevImg}
-              aria-label="Previous photo"
+              aria-label={t('ui.previous')}
               className="absolute left-2.5 sm:left-6 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 backdrop-blur-md text-white p-2 sm:p-3 rounded-full transition-all opacity-85 hover:opacity-100 hover:scale-110 cursor-pointer"
             >
               <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
             </button>
             <button
               onClick={nextImg}
-              aria-label="Next photo"
+              aria-label={t('ui.next')}
               className="absolute right-2.5 sm:right-6 top-1/2 -translate-y-1/2 bg-black/45 hover:bg-black/70 backdrop-blur-md text-white p-2 sm:p-3 rounded-full transition-all opacity-85 hover:opacity-100 hover:scale-110 cursor-pointer"
             >
               <ChevronRight size={18} className="sm:w-5 sm:h-5" />
@@ -126,7 +128,7 @@ const PlaceDetailSection = ({ place, onClose }) => {
               {place.images.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => { setImgLoaded(false); setImgIndex(i) }}
+                  onClick={() => { setImgIndex(i) }}
                   aria-label={`Photo ${i + 1}`}
                   className={`transition-all rounded-full cursor-pointer ${
                     i === imgIndex ? 'w-5 sm:w-6 h-1.5 sm:h-2 bg-emerald-400' : 'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/60 hover:bg-white'
@@ -154,7 +156,7 @@ const PlaceDetailSection = ({ place, onClose }) => {
                 )}
               </div>
 
-              <h2 className="text-white font-serif text-xl sm:text-3xl lg:text-4xl font-extrabold drop-shadow-xl leading-tight truncate">
+              <h2 className="text-white font-serif text-xl sm:text-3xl lg:text-4xl font-extrabold drop-shadow-xl leading-tight">
                 {place.name}
               </h2>
 
@@ -185,6 +187,7 @@ const PlaceDetailSection = ({ place, onClose }) => {
           return (
             <button
               key={tab.id}
+              aria-pressed={activeTab === tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3.5 px-1 sm:px-3 text-xs sm:text-sm font-semibold border-b-2 transition-all cursor-pointer text-center min-w-0 ${
                 isActive
@@ -353,16 +356,15 @@ const PlaceDetailSection = ({ place, onClose }) => {
                   key={i}
                   onClick={() => {
                     setImgIndex(i)
-                    setImgLoaded(false)
-                    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+                    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                   }}
-                  className={`group/thumb relative aspect-4/3 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 text-left cursor-pointer ${
+                  className={`group/thumb relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 text-left cursor-pointer ${
                     i === imgIndex
-                      ? 'ring-3 sm:ring-4 ring-emerald-500 shadow-xl scale-[0.98]'
+                      ? 'ring-2 sm:ring-4 ring-emerald-500 shadow-xl scale-[0.98]'
                       : 'hover:scale-[0.98] opacity-90 hover:opacity-100'
                   }`}
                 >
-                  <img
+                  <ResponsiveImage
                     src={img.url}
                     alt={img.caption || `${place.name} photo ${i + 1}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110"

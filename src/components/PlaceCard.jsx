@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage'
 import { MapPin, ArrowRight, Star } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -7,16 +8,20 @@ const PlaceCard = ({ place, onClick, isSelected }) => {
 
   return (
     <button
+      id={`place-${place.id}`}
       onClick={() => onClick(place)}
-      className={`group relative w-full text-left rounded-2xl overflow-hidden bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+      aria-expanded={!!isSelected}
+      aria-controls={isSelected ? "place-details-inline" : undefined}
+      className={`place-card group relative w-full text-left rounded-2xl overflow-hidden bg-gray-900 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
         isSelected ? 'ring-4 ring-emerald-400 shadow-2xl shadow-emerald-500/30 -translate-y-1' : ''
       }`}
       style={{ minHeight: '260px' }}
     >
       {/* Background image */}
       {mainImage && (
-        <img
-          src={mainImage}
+        <ResponsiveImage
+          loading="lazy" decoding="async"
+          src={mainImage} sizes="(max-width:479px) 100vw, (max-width:1179px) 50vw, 25vw"
           alt={place.name}
           className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
             isSelected ? 'scale-105 opacity-100' : 'opacity-90 group-hover:opacity-100'
@@ -84,7 +89,7 @@ const PlaceCard = ({ place, onClick, isSelected }) => {
         )}
 
         {/* CTA */}
-        <div className={`flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 ${
+        <div className={`place-card-cta flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 ${
           isSelected
             ? 'text-emerald-300 opacity-100 translate-y-0'
             : 'text-emerald-400 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0'

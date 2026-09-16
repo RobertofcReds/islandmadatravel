@@ -1,35 +1,47 @@
+import ResponsiveImage from '../components/ResponsiveImage'
+import { Journey, FAQ } from '../components/Journey'
+import Hero from '../components/Hero'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
 // Local destination images imports
-import diegoTroisBaies from '../images/destination/Les Trois Baies.jpg'
-import diegoMontagneAmbre from '../images/destination/Forêt de Montagne d\'Ambre.jpg'
-import diegoTsingyRouges from '../images/destination/Tsingy Rouges.jpg'
-import diegoRamena from '../images/destination/Plage de Ramena.jpg'
-import diegoMerEmeraude from '../images/destination/Mer d\'Émeraude.jpg'
+import diegoTroisBaies from '../images/optimized/destination/Les Trois Baies.webp'
+import diegoMontagneAmbre from '../images/optimized/destination/Forêt de Montagne d\'Ambre.webp'
+import diegoTsingyRouges from '../images/optimized/destination/Tsingy Rouges.webp'
+import diegoRamena from '../images/optimized/destination/Plage de Ramena.webp'
+import diegoMerEmeraude from '../images/optimized/destination/Mer d\'Émeraude.webp'
 
-import nosyParfums from '../images/destination/Nosy Be - Île aux Parfums.jpg'
-import nosyIranja from '../images/destination/Nosy Iranja.jpg'
-import nosyTanikely from '../images/destination/Nosy Tanikely.jpg'
-import nosyAndilana from '../images/destination/Plage d\'Andilana.jpg'
-import nosyKomba from '../images/destination/Nosy Komba.jpg'
+import nosyParfums from '../images/optimized/destination/Nosy Be - Île aux Parfums.webp'
+import nosyIranja from '../images/optimized/destination/Nosy Iranja.webp'
+import nosyTanikely from '../images/optimized/destination/Nosy Tanikely.webp'
+import nosyAndilana from '../images/optimized/destination/Plage d\'Andilana.webp'
+import nosyKomba from '../images/optimized/destination/Nosy Komba.webp'
+
+// HD images
+import hdAmbre from '../images/optimized/diego/026-ambre.webp'
+import hdCapDiego from '../images/optimized/diego/031-cap diego_three.webp'
+import hdCascade from '../images/optimized/nosy/021-cascade_caption.webp'
+import hdNosyBeach from '../images/optimized/nosy/019-caption.webp'
 
 const Home = () => {
   const { t } = useLanguage()
-  const [heroIndex, setHeroIndex] = useState(0)
   const [diegoIndex, setDiegoIndex] = useState(0)
   const [nosyIndex, setNosyIndex] = useState(0)
 
   const heroImages = [
-    diegoMerEmeraude,
     nosyIranja,
+    hdAmbre,
     diegoTroisBaies,
     nosyParfums,
-    diegoTsingyRouges,
-    nosyTanikely,
-    diegoMontagneAmbre,
+    hdCapDiego,
+    diegoMerEmeraude,
+    hdCascade,
     nosyAndilana,
+    nosyTanikely,
+    hdNosyBeach,
+    diegoMontagneAmbre,
+    diegoTsingyRouges,
   ]
 
   const diegoMedia = [
@@ -48,96 +60,14 @@ const Home = () => {
     { type: 'image', url: nosyKomba, caption: 'Nosy Komba' },
   ]
 
-  useEffect(() => {
-    const heroInterval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 6000)
-
-    const diegoInterval = setInterval(() => {
-      setDiegoIndex((prev) => (prev + 1) % diegoMedia.length)
-    }, 5000)
-
-    const nosyInterval = setInterval(() => {
-      setNosyIndex((prev) => (prev + 1) % nosyMedia.length)
-    }, 5000)
-
-    return () => {
-      clearInterval(heroInterval)
-      clearInterval(diegoInterval)
-      clearInterval(nosyInterval)
-    }
-  }, [heroImages.length, diegoMedia.length, nosyMedia.length])
 
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Carousel d'images fluides en arrière-plan */}
-        <div className="absolute inset-0 bg-black">
-          {heroImages.map((imgUrl, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === heroIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-              }`}
-              style={{ transitionProperty: 'opacity, transform' }}
-            >
-              <img
-                src={imgUrl}
-                alt="Madagascar"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-          {/* Layer de dégradé adouci pour faire ressortir les images tout en gardant une excellente lisibilité */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-black/15"></div>
-        </div>
-
-        {/* Content */}
-        <div className="container-custom text-center text-white relative z-10 px-4 max-w-4xl mx-auto min-w-0">
-          <span className="inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs md:text-sm font-medium tracking-wider uppercase mb-4 border border-white/30 truncate max-w-full">
-            {t('home.hero.badge')}
-          </span>
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-md break-words">
-            {t('home.hero.title')}
-          </h1>
-          <p className="text-base sm:text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-2xl mx-auto leading-relaxed break-words" dangerouslySetInnerHTML={{__html: t('home.hero.subtitle').replace('Diégo-Suarez', `<span class="font-semibold text-white underline decoration-emerald-400">${t('navbar.diego')}</span>`).replace('Nosy Be', `<span class="font-semibold text-white underline decoration-emerald-400">${t('navbar.nosy')}</span>`)}}>
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link 
-              to="/destinations" 
-              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-8 py-4 rounded-full shadow-lg hover:shadow-emerald-500/30 transition-all transform hover:-translate-y-1 text-center whitespace-nowrap shrink-0"
-            >
-              {t('home.hero.cta_explore')}
-            </Link>
-            <Link 
-              to="/contact" 
-              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/40 font-medium px-8 py-4 rounded-full transition-all transform hover:-translate-y-1 text-center whitespace-nowrap shrink-0"
-            >
-              {t('home.hero.cta_contact')}
-            </Link>
-          </div>
-        </div>
-
-        {/* Dots Navigation */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shrink-0">
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setHeroIndex(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === heroIndex 
-                  ? 'w-8 h-2.5 bg-emerald-400' 
-                  : 'w-2.5 h-2.5 bg-white/50 hover:bg-white/80'
-              }`}
-              aria-label={`Slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      </section>
+      <Hero images={heroImages} title={t('home.hero.title')} subtitle={t('home.hero.subtitle')} badge={t('home.hero.badge')} anchor="page-content" home actions={[{ to: '/destinations', label: t('home.hero.cta_explore') }, { to: '/contact', label: t('ui.plan') }]} />
 
       {/* Destinations Preview */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900 transition-colors overflow-hidden">
+      <section id="page-content" className="py-24 bg-gray-50 dark:bg-gray-900 transition-colors overflow-hidden">
         <div className="container-custom max-w-7xl mx-auto px-6">
           <div className="text-center mb-16 min-w-0">
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 dark:text-white mb-3 break-words">{t('home.destinations.title')}</h2>
@@ -148,7 +78,7 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-10">
             
             {/* Diégo-Suarez Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700/60 flex flex-col justify-between min-w-0">
+            <div className="travel-card bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700/60 flex flex-col justify-between min-w-0">
               <div className="min-w-0">
                 <div className="relative h-72 overflow-hidden group min-w-0">
                   {diegoMedia.map((media, idx) => (
@@ -159,7 +89,8 @@ const Home = () => {
                       }`}
                     >
                       {media.type === 'image' ? (
-                        <img
+                        <ResponsiveImage
+                loading="lazy" decoding="async"
                           src={media.url}
                           alt={media.caption}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -178,7 +109,7 @@ const Home = () => {
                   <span className="absolute top-4 right-4 bg-emerald-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md z-10 tracking-wide uppercase truncate max-w-[75%] whitespace-nowrap shrink-0">
                     {t('home.destinations.diego.badge')}
                   </span>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 z-10 flex justify-between items-end gap-3 min-w-0">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 z-10 flex flex-col items-start gap-2 min-w-0">
                     <p className="text-white font-medium text-sm tracking-wide truncate min-w-0">{diegoMedia[diegoIndex].caption}</p>
                     
                     {/* Inner Card Dots */}
@@ -186,6 +117,7 @@ const Home = () => {
                       {diegoMedia.map((_, index) => (
                         <button
                           key={index}
+                          aria-label={`Photo ${index + 1}`}
                           onClick={() => setDiegoIndex(index)}
                           className={`w-2 h-2 rounded-full transition-all ${
                             index === diegoIndex ? 'bg-emerald-400 w-4' : 'bg-white/60'
@@ -216,14 +148,14 @@ const Home = () => {
               </div>
 
               <div className="px-6 sm:px-8 pb-6 sm:pb-8 min-w-0">
-                <Link to="/diego" className="block w-full text-center bg-gray-900 dark:bg-gray-700 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white font-medium py-3 rounded-2xl transition-colors whitespace-nowrap truncate">
+                <Link to="/diego" className="block w-full text-center bg-gray-900 dark:bg-gray-700 hover:bg-emerald-600 dark:hover:bg-emerald-600 text-white font-medium py-3 rounded-2xl transition-colors whitespace-normal">
                   {t('home.destinations.diego.cta')}
                 </Link>
               </div>
             </div>
 
             {/* Nosy Be Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700/60 flex flex-col justify-between min-w-0">
+            <div className="travel-card bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700/60 flex flex-col justify-between min-w-0">
               <div className="min-w-0">
                 <div className="relative h-72 overflow-hidden group min-w-0">
                   {nosyMedia.map((media, idx) => (
@@ -234,7 +166,8 @@ const Home = () => {
                       }`}
                     >
                       {media.type === 'image' ? (
-                        <img
+                        <ResponsiveImage
+                loading="lazy" decoding="async"
                           src={media.url}
                           alt={media.caption}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -253,7 +186,7 @@ const Home = () => {
                   <span className="absolute top-4 right-4 bg-teal-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md z-10 tracking-wide uppercase truncate max-w-[75%] whitespace-nowrap shrink-0">
                     {t('home.destinations.nosy.badge')}
                   </span>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 z-10 flex justify-between items-end gap-3 min-w-0">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 z-10 flex flex-col items-start gap-2 min-w-0">
                     <p className="text-white font-medium text-sm tracking-wide truncate min-w-0">{nosyMedia[nosyIndex].caption}</p>
                     
                     {/* Inner Card Dots */}
@@ -261,6 +194,7 @@ const Home = () => {
                       {nosyMedia.map((_, index) => (
                         <button
                           key={index}
+                          aria-label={`Photo ${index + 1}`}
                           onClick={() => setNosyIndex(index)}
                           className={`w-2 h-2 rounded-full transition-all ${
                             index === nosyIndex ? 'bg-teal-400 w-4' : 'bg-white/60'
@@ -291,7 +225,7 @@ const Home = () => {
               </div>
 
               <div className="px-6 sm:px-8 pb-6 sm:pb-8 min-w-0">
-                <Link to="/nosy" className="block w-full text-center bg-gray-900 dark:bg-gray-700 hover:bg-teal-600 dark:hover:bg-teal-600 text-white font-medium py-3 rounded-2xl transition-colors whitespace-nowrap truncate">
+                <Link to="/nosy" className="block w-full text-center bg-gray-900 dark:bg-gray-700 hover:bg-teal-600 dark:hover:bg-teal-600 text-white font-medium py-3 rounded-2xl transition-colors whitespace-normal">
                   {t('home.destinations.nosy.cta')}
                 </Link>
               </div>
@@ -344,22 +278,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-900 to-gray-950 text-white">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div className="container-custom max-w-4xl mx-auto text-center relative z-10 px-6 min-w-0">
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold mb-6 leading-tight break-words">{t('home.cta.title')}</h2>
-          <p className="text-lg sm:text-xl mb-10 text-emerald-100 font-light max-w-2xl mx-auto break-words">
-            {t('home.cta.subtitle')}
-          </p>
-          <Link 
-            to="/contact" 
-            className="bg-white text-emerald-900 hover:bg-emerald-50 font-semibold px-9 py-4 rounded-full shadow-2xl transition-all hover:scale-105 inline-block whitespace-nowrap shrink-0 max-w-full truncate"
-          >
-            {t('home.cta.button')}
-          </Link>
-        </div>
-      </section>
+      <Journey />
+      <FAQ />
+
       </div>
   )
 }

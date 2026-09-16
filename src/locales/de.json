@@ -361,7 +361,7 @@
     "readMore": "Weiterlesen"
   },
   "place_card": {
-    "active_below": "Unten aktiv ↓",
+    "active_below": "Unten aktiv â†“",
     "details_open": "Details unten geöffnet ↓",
     "see_details": "Details ansehen"
   },
@@ -404,5 +404,85 @@
     "cta_title": "Bereit für Ihren Aufenthalt auf Nosy Be?",
     "cta_subtitle": "Ich führe Sie maßgeschneidert durch all diese paradiesischen Orte. Kontaktieren Sie mich, um Ihre unvergessliche Reise zu planen.",
     "cta_btn": "Meine Reise planen"
+  },
+  "ui": {
+    "plan": "Reise planen",
+    "discover": "Mehr entdecken",
+    "previous": "Vorheriges Foto",
+    "next": "Nächstes Foto",
+    "pause": "Diashow pausieren",
+    "play": "Diashow starten",
+    "language": "Sprache",
+    "light": "Hellen Modus aktivieren",
+    "dark": "Dunklen Modus aktivieren",
+    "menu": "Navigationsmenü",
+    "close": "Schließen",
+    "skip": "Zum Inhalt",
+    "loading": "Wird geladen…",
+    "notFound": "Diese Seite ist nicht verfügbar.",
+    "notFoundText": "Entdecken Sie unsere Reiseziele auf der Startseite.",
+    "formPrivacy": "Dieses Formular sendet Ihre Anfrage über FormSubmit. Die Buchung wird separat bestätigt.",
+    "showMap": "Karte anzeigen"
+  },
+  "journey": {
+    "eyebrow": "Ihre Reise, ganz einfach",
+    "title": "Ein schönes Abenteuer beginnt mit einem Gespräch.",
+    "subtitle": "Eine gemeinsam geplante Route nach Ihren Wünschen und Ihrem Tempo.",
+    "step1": {
+      "title": "Teilen Sie Ihre Wünsche",
+      "text": "Reiseziele, mögliche Termine und Gruppengröße: erzählen Sie mir von Ihrer Wunschreise."
+    },
+    "step2": {
+      "title": "Wir planen Ihre Route",
+      "text": "Gemeinsam besprechen wir Etappen, Aktivitäten, Transport und gewünschte Leistungen."
+    },
+    "step3": {
+      "title": "Entspannt aufbrechen",
+      "text": "Programm und Einzelheiten werden vor der Reisebestätigung mit Ihnen vereinbart."
+    }
+  },
+  "faq": {
+    "eyebrow": "Vor der Reise",
+    "title": "Die ersten Fragen, beantwortet.",
+    "subtitle": "Besondere Wünsche? Sprechen wir darüber.",
+    "q1": "Kann ich meine Route individuell gestalten?",
+    "a1": "Ja. Teilen Sie Interessen, Tempo, Gruppengröße und Budget mit, damit wir ein passendes Angebot erstellen können.",
+    "q2": "Kann ich Diégo-Suarez und Nosy Be kombinieren?",
+    "a2": "Sie können eine Reise zu beiden Zielen anfragen. Etappen und Transfers planen wir entsprechend Ihrer verfügbaren Zeit.",
+    "q3": "Wie erhalte ich ein Angebot?",
+    "a3": "Senden Sie Termine, Reiseziele und Teilnehmerzahl. Das Angebot nennt enthaltene Leistungen, Optionen und den vor der Buchung zu vereinbarenden Preis.",
+    "q4": "Bestätigt das Formular meine Buchung?",
+    "a4": "Nein. Das Formular dient der Kontaktaufnahme. Die Buchung erfolgt nach Einigung über Programm, Verfügbarkeit und Modalitäten."
+  },
+  "information": {
+    "privacy": {
+      "title": "Datenschutz & Daten",
+      "heading1": "Ihre Reiseanfrage",
+      "text1": "Das Formular übermittelt Name, E-Mail-Adresse, Nachricht und freiwillige Reiseangaben an FormSubmit, den Dienst zum Versand von Anfragen.",
+      "heading2": "Einstellungen auf diesem Gerät",
+      "text2": "Sprache und Design werden im lokalen Browserspeicher gespeichert. Sie können diese Einstellungen in Ihrem Browser löschen.",
+      "heading3": "Externe Dienste & Kontakt",
+      "text3": "Die Karte verwendet Google Maps. Schriften und einige Symbole werden von externen Diensten geladen. WhatsApp-Links öffnen einen Drittanbieterdienst. Bei Fragen zu Ihren Anfrageinformationen kontaktieren Sie uns per E-Mail."
+    },
+    "terms": {
+      "title": "Informationen zu Reiseanfragen",
+      "heading1": "Anfrage & Bestätigung",
+      "text1": "Diese Website stellt Reiseziele und Leistungen vor. Eine Anfrage per Formular oder WhatsApp ist keine bestätigte Buchung.",
+      "heading2": "Programm & Leistungen",
+      "text2": "Route, Termine, Verfügbarkeit, Preis und enthaltene Leistungen werden vor der Bestätigung direkt mit Ihrem Guide vereinbart.",
+      "heading3": "Reisemodalitäten",
+      "text3": "Erfragen Sie Zahlungs-, Änderungs- und Stornierungsmodalitäten Ihres Angebots vor der Bestätigung. Ausflüge werden den örtlichen Bedingungen angepasst."
+    }
+  },
+  "selectors": {
+    "languageHint": "Ihre Reise, in Ihrer Sprache.",
+    "undecided": "Gemeinsam entscheiden",
+    "undecidedHint": "Ich wünsche mir eine Beratung",
+    "diegoHint": "Buchten, Natur und weite Landschaften",
+    "nosyHint": "Inseln, Strände und türkisfarbene Lagunen",
+    "bothHint": "Eine Route zwischen Land und Meer",
+    "destinationTitle": "Wählen Sie Ihr Reiseziel",
+    "destinationHint": "Wohin zieht es Sie?",
+    "destinationPlaceholder": "Wohin möchten Sie reisen?"
   }
 }
